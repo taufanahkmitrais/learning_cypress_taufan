@@ -1,25 +1,28 @@
-// ***********************************************
-// This example commands.js shows you how to
-// create various custom commands and overwrite
-// existing commands.
-//
-// For more comprehensive examples of custom
-// commands please read more here:
-// https://on.cypress.io/custom-commands
-// ***********************************************
-//
-//
-// -- This is a parent command --
-// Cypress.Commands.add('login', (email, password) => { ... })
-//
-//
-// -- This is a child command --
-// Cypress.Commands.add('drag', { prevSubject: 'element'}, (subject, options) => { ... })
-//
-//
-// -- This is a dual command --
-// Cypress.Commands.add('dismiss', { prevSubject: 'optional'}, (subject, options) => { ... })
-//
-//
-// -- This will overwrite an existing command --
-// Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+Cypress.Commands.add('purple_login', (email, password) => {
+   // Visit purple login page
+   cy.visit(Cypress.env('purple_site') + "/login");
+    
+   // get the login button
+   cy.get('[data-testid="login-button"]').click();
+
+   // login via microsoft account
+   cy.origin('https://login.live.com', { args: { email, password } }, ({ email, password }) => {
+     // input the email
+     cy.get('#i0116').type(email);
+
+     // click next button
+     cy.get('#idSIButton9').click();
+
+     // input password
+     cy.get('#i0118').type(password);
+
+     // click the login button
+     cy.get('#idSIButton9').click();
+
+     // click the stay signed in yes button
+     cy.get('#acceptButton').click()
+   });
+
+   // get dashboard button to make sure the page is loaded correctly
+   cy.get('li.font-bold > button:nth-child(1)').should('exist');
+});

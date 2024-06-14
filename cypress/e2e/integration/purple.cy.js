@@ -2,32 +2,7 @@ describe('Purple main functional Test', () => {
   context('when successfully logged in', () =>{
     beforeEach(() => {
       cy.session('loggedInState', () => {
-        // Visit purple login page
-        cy.visit(Cypress.env('purple_site') + "/login");
-    
-        // get the login button
-        cy.get('[data-testid="login-button"]').click();
-    
-        // login via microsoft account
-        cy.origin('https://login.live.com', () => {
-          // input the email
-          cy.get('#i0116').type(Cypress.env('microsoft_email'));
-    
-          // click next button
-          cy.get('#idSIButton9').click();
-    
-          // input password
-          cy.get('#i0118').type(Cypress.env('microsoft_password'));
-    
-          // click the login button
-          cy.get('#idSIButton9').click();
-    
-          // click the stay signed in yes button
-          cy.get('#acceptButton').click()
-        });
-  
-        // get dashboard button to make sure the page is loaded correctly
-        cy.get('li.font-bold > button:nth-child(1)').should('exist');
+        cy.purple_login(Cypress.env('microsoft_email'), Cypress.env('microsoft_password'));
       })
   
       cy.visit(Cypress.env('purple_site'));
@@ -56,9 +31,9 @@ describe('Purple main functional Test', () => {
       });
     });
 
-    context('when visiting the HR Administrator - Role Privileges page', () =>{
+    context('when visiting the HR Administration - Role Privileges page', () =>{
       beforeEach(() =>{
-        // Click HR Administrator
+        // Click HR Administration
         cy.get(':nth-child(2) > button.mds-menu-dropdown-toggle').click();
 
         // Click Role Privileges
@@ -90,9 +65,9 @@ describe('Purple main functional Test', () => {
       });
     });
 
-    context('when visiting the HR Administrator - Managed User Roles page', () =>{
+    context('when visiting the HR Administration - Managed User Roles page', () =>{
       beforeEach(() =>{
-        // Click HR Administrator
+        // Click HR Administration
         cy.get(':nth-child(2) > button.mds-menu-dropdown-toggle').click();
 
         // Click Managed User Roles
