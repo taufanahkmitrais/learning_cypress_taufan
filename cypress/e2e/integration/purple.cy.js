@@ -2,7 +2,7 @@ describe('Purple main functional Test', () => {
   beforeEach(() => {
     cy.session('loggedInState', () => {
       // Visit purple login page
-      cy.visit(Cypress.env('purple_site'));
+      cy.visit(Cypress.env('purple_site') + "/login");
   
       // get the login button
       cy.get('[data-testid="login-button"]').click();
@@ -29,7 +29,7 @@ describe('Purple main functional Test', () => {
       cy.get('li.font-bold > button:nth-child(1)').should('exist');
     })
 
-    cy.visit('https://172.19.14.39');
+    cy.visit(Cypress.env('purple_site'));
 
   });
 
