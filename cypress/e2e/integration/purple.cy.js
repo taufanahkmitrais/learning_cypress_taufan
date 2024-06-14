@@ -102,5 +102,183 @@ describe('Purple main functional Test', () => {
         cy.contains('Action').should('exist');
       });
     });
+
+    context('when visiting the HR Administration - Master Data page', () =>{
+      beforeEach(() =>{
+        // Click HR Administration
+        cy.get(':nth-child(2) > button.mds-menu-dropdown-toggle').click();
+
+        // Click Master Data
+        cy.get('li.mds-menu-dropdown-toggle:nth-child(3) > button:nth-child(1)').click();
+      });
+    
+      it('has Unselected option', () => {
+        cy.get('[data-testid="master-data-select"]').select('Unselected');
+
+        cy.contains('Unselected').should('exist');
+      });
+        
+      it('has Position option', () => {
+        cy.get('[data-testid="master-data-select"]').select('Position');
+
+        cy.contains('Position').should('exist');
+      });
+    
+      it('has Country option', () => {
+        cy.get('[data-testid="master-data-select"]').select('Country');
+
+        cy.contains('Country').should('exist');
+      });
+
+      it('has Religion option', () => {
+        cy.get('[data-testid="master-data-select"]').select('Religion');
+
+        cy.contains('Religion').should('exist');
+      });
+
+      it('has Marital Status option', () => {
+        cy.get('[data-testid="master-data-select"]').select('Marital Status');
+
+        cy.contains('Marital Status').should('exist');
+      });
+    });
+
+    context('when visiting the HR Administration - Locations page', () =>{
+      beforeEach(() =>{
+        // Click HR Administration
+        cy.get(':nth-child(2) > button.mds-menu-dropdown-toggle').click();
+
+        // Click Locations
+        cy.get('.mds-menu-dropdown > :nth-child(4) > button').click();
+      });
+    
+      it('has Location Title', () => {
+        cy.contains('Location').should('exist');
+      });
+        
+      it('has No column', () => {
+        cy.contains('No').should('exist');
+      });
+    
+      it('has Office Name column', () => {
+        cy.contains('Office Name').should('exist');
+      });
+
+      it('has City column', () => {
+        cy.contains('City').should('exist');
+      });
+
+      it('has Country column', () => {
+        cy.contains('Country').should('exist');
+      });
+
+      it('has Phone column', () => {
+        cy.contains('Phone').should('exist');
+      });
+
+      it('has Number of Employees column', () => {
+        cy.contains('Number of Employees').should('exist');
+      });
+
+      it('has Action column', () => {
+        cy.contains('Action').should('exist');
+      });
+    });
+
+    context('when visiting the HR Administration - Audit Trail page', () =>{
+      beforeEach(() =>{
+        // Click HR Administration
+        cy.get(':nth-child(2) > button.mds-menu-dropdown-toggle').click();
+
+        // Click Audit Trail
+        cy.get('.mds-menu-dropdown > :nth-child(5)').click();
+      });
+    
+      it('has Audit Trail Title', () => {
+        cy.contains('Audit Trail').should('exist');
+      });
+        
+      it('has Date column', () => {
+        cy.contains('Date').should('exist');
+      });
+    
+      it('has Correlation Id column', () => {
+        cy.contains('Correlation Id').should('exist');
+      });
+
+      it('has User Name column', () => {
+        cy.contains('User Name').should('exist');
+      });
+
+      it('has Service column', () => {
+        cy.contains('Service').should('exist');
+      });
+
+      it('has Entity column', () => {
+        cy.contains('Entity').should('exist');
+      });
+
+      it('has Action column', () => {
+        cy.contains('Action').should('exist');
+      });
+
+      it('has Changes column', () => {
+        cy.contains('Changes').should('exist');
+      });
+    });
+
+    context('when Sign Out', () =>{
+      beforeEach(() =>{
+        // Click HR Administration
+        cy.get(':nth-child(2) > button.mds-menu-dropdown-toggle').click();
+
+        // Click Sign Out
+        cy.get('.bottom-0 > .flex').click();
+      });
+    
+      it('has Sign out Confirmation', () => {
+        cy.contains('Sign out Confirmation').should('exist');
+      });
+        
+      it('has Sign Out Confirmation Submit Button', () => {
+        cy.get('[data-testid="delete-confirmation-submit"]').should('exist');
+      });
+    
+      it('can Sign Out', () => {
+        cy.get('[data-testid="delete-confirmation-submit"]').click();
+
+        cy.contains('Login to your Account').should('exist');
+      });
+    });
+  });
+
+  context('when failed to log in', () =>{
+    it('should not be able to log in', () => {
+      // Visit purple login page
+      cy.visit(Cypress.env('purple_site') + "/login");
+        
+      // get the login button
+      cy.get('[data-testid="login-button"]').click();
+
+      // login via microsoft account
+      cy.origin('https://login.live.com', {
+        args: { email: Cypress.env('microsoft_email'), password: 'falsepassword' }
+      }, ({ email, password }) => {
+        // input the email
+        cy.get('#i0116').type(email);
+
+        // click next button
+        cy.get('#idSIButton9').click();
+
+        // input password
+        cy.get('#i0118').type(password);
+
+        // click the login button
+        cy.get('#idSIButton9').click();
+
+        // click the stay signed in yes button
+        cy.contains("Your account or password is incorrect. If you don't remember your password").should('exist');
+      });
+    });
   });
 })
