@@ -26,3 +26,14 @@ Cypress.Commands.add('purple_login', (email, password) => {
    // get dashboard button to make sure the page is loaded correctly
    cy.get('li.font-bold > button:nth-child(1)').should('exist');
 });
+
+Cypress.Commands.add('generate_random_string', (length, isNumber=false) => {
+  const characters = isNumber ? 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz': '1234567890';
+  let result = '';
+  for (let i = 0; i < length; i++) {
+      const randomIndex = Math.floor(Math.random() * characters.length);
+      result += characters[randomIndex];
+  }
+  // Return a promise that resolves to the result string
+  result
+});
